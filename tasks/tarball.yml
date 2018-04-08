@@ -1,6 +1,6 @@
 ---
 
-- name: "determin if to use systemd or not (for centos 6 support)"
+- name: "determine if to use systemd or not (for centos 6 support)"
   stat:
     path: /etc/systemd
   register: systemd
@@ -96,7 +96,7 @@
   tags:
     - link
 
-- name: "Create init sctipt link file"
+- name: "Create init script link file"
   file:
     src: "{{ amq_install_dir }}/activemq/bin/linux-x86-{{ ansible_userspace_bits }}/activemq"
     dest: "/etc/init.d/activemq"
@@ -105,7 +105,7 @@
     state: link
   when: amq_systemd is not defined
 
-- name: "Create init sctipt link file"
+- name: "Create init script link file"
   file:
     src: "{{ amq_install_dir }}/activemq/bin/linux-x86-{{ ansible_userspace_bits }}/activemq"
     dest: "/etc/init.d/activemq"
@@ -129,6 +129,7 @@
     owner: root
     group: root
     mode: 0755
+  when: ansible_distribution == 'CentOS'
 
 - name: "Generate systemd service file"
   template:
